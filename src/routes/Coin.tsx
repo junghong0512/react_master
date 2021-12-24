@@ -79,6 +79,10 @@ const Tab = styled.span<{ isActive: boolean }>`
   }
 `;
 
+type RouteParams = {
+  coinId: string;
+};
+
 interface RouteState {
   state: {
     name: string;
@@ -154,7 +158,7 @@ interface PriceData {
 }
 
 function Coin() {
-  const { coinId } = useParams();
+  const { coinId } = useParams<keyof RouteParams>() as RouteParams;
   const { state } = useLocation() as RouteState;
 
   const priceMatch = useMatch("/:coinId/price");
@@ -219,7 +223,7 @@ function Coin() {
 
           <Routes>
             <Route path="price" element={<Price />}></Route>
-            <Route path="chart" element={<Chart />}></Route>
+            <Route path="chart" element={<Chart coinId={coinId} />}></Route>
           </Routes>
         </>
       )}
