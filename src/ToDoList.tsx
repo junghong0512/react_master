@@ -31,13 +31,28 @@ import { useForm } from "react-hook-form";
   );
 } */
 
-function ToDoList() {
-  const { register, handleSubmit, formState } = useForm();
-  const onValid = (data: any) => {
-    // console.log(data);
-  };
+interface IFrom {
+  email: string;
+  firstName: string;
+  lastName?: string;
+  username: string;
+  password: string;
+  password1: string;
+}
 
-  console.log(formState.errors);
+function ToDoList() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFrom>({
+    defaultValues: {
+      email: "@gmail.com",
+    },
+  });
+  const onValid = (data: any) => {
+    console.log(data);
+  };
 
   return (
     <div>
@@ -45,23 +60,37 @@ function ToDoList() {
         style={{ display: "flex", flexDirection: "column" }}
         onSubmit={handleSubmit(onValid)}
       >
-        <input {...register("email", { required: true })} placeholder="Email" />
         <input
-          {...register("firstName", { required: true })}
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Za-z0-9._%+-]+@gmail.com$/,
+              message: "Only Gmail Allowed",
+            },
+          })}
+          placeholder="Email"
+        />
+        <span>{errors?.email?.message}</span>
+        <input
+          {...register("firstName", { required: "Write here" })}
           placeholder="First Name"
         />
+        <span>{errors?.firstName?.message}</span>
         <input
-          {...register("lastName", { required: true })}
+          {...register("lastName", { required: "Write here" })}
           placeholder="Last Name"
         />
+        <span>{errors?.lastName?.message}</span>
         <input
-          {...register("username", { required: true, minLength: 10 })}
+          {...register("username", { required: "Write here", minLength: 10 })}
           placeholder="Username"
         />
+        <span>{errors?.username?.message}</span>
         <input
-          {...register("password", { required: true, minLength: 5 })}
+          {...register("password", { required: "Write here", minLength: 5 })}
           placeholder="Pssword"
         />
+        <span>{errors?.password?.message}</span>
         <input
           {...register("password1", {
             required: "Password is required",
@@ -72,6 +101,7 @@ function ToDoList() {
           })}
           placeholder="Password1"
         />
+        <span>{errors?.password1?.message}</span>
         <button>Add</button>
       </form>
     </div>
