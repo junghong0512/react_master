@@ -38,6 +38,7 @@ interface IFrom {
   username: string;
   password: string;
   password1: string;
+  extraErrors?: string;
 }
 
 function ToDoList() {
@@ -45,13 +46,21 @@ function ToDoList() {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<IFrom>({
     defaultValues: {
       email: "@gmail.com",
     },
   });
-  const onValid = (data: any) => {
-    console.log(data);
+  const onValid = (data: IFrom) => {
+    if (data.password != data.password1) {
+      setError(
+        "password1",
+        { message: "Passwords are not the same" },
+        { shouldFocus: true }
+      );
+    }
+    // setError("extraErrors", { message: "Server offline" });
   };
 
   return (
@@ -72,7 +81,15 @@ function ToDoList() {
         />
         <span>{errors?.email?.message}</span>
         <input
-          {...register("firstName", { required: "Write here" })}
+          {...register("firstName", {
+            required: "Write here",
+            validate: {
+              noTest: (value) =>
+                value.includes("test") ? "no test allowed" : true,
+              noTest2: (value) =>
+                value.includes("test2") ? "no test allowed" : true,
+            },
+          })}
           placeholder="First Name"
         />
         <span>{errors?.firstName?.message}</span>
@@ -103,6 +120,7 @@ function ToDoList() {
         />
         <span>{errors?.password1?.message}</span>
         <button>Add</button>
+        <span>{errors?.extraErrors?.message}</span>
       </form>
     </div>
   );
