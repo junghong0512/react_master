@@ -11,7 +11,6 @@ function CreateToDo() {
   const setToDos = useSetRecoilState(toDoState);
 
   const handleValid = ({ toDo }: IForm) => {
-    console.log("add to do: ", toDo);
     setToDos((oldToDos) => [
       { id: Date.now(), text: toDo, category: "TO_DO" },
       ...oldToDos,
