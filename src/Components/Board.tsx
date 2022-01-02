@@ -6,7 +6,6 @@ import DragabbleCard from "./DragabbleCard";
 
 const Wrapper = styled.div`
   width: 300px;
-  padding: 20px 10px;
   padding-top: 10px;
   background-color: ${(props) => props.theme.boardColor};
   border-radius: 5px;
@@ -28,12 +27,13 @@ interface IAreaProps {
 }
 
 const Area = styled.div<IAreaProps>`
+  padding: 20px;
   background-color: ${(props) =>
     props.isDraggingOver
-      ? "gray"
+      ? "#dfe6e9"
       : props.isDraggingFromThis
-      ? "green"
-      : "skyblue"};
+      ? "#b2bec3"
+      : "transparent"};
   flex-grow: 1;
   transition: background-color 0.5s ease-in-out;
 `;
