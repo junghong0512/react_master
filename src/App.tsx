@@ -51,15 +51,6 @@ function App() {
         };
       });
     }
-
-    /* setToDos((oldToDo) => {
-      const toDosCopy = [...oldToDo];
-      // 1) Delete item on source.index
-      toDosCopy.splice(source.index, 1);
-      // 2) Put back the item on the destination.index
-      toDosCopy.splice(destination?.index, 0, draggableId);
-      return toDosCopy;
-    }); */
   };
 
   return (
