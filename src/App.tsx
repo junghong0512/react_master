@@ -1,8 +1,7 @@
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { toDoState } from "./atoms";
-import Board from "./Components/Board";
+import { motion } from "framer-motion";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -24,6 +23,7 @@ function App() {
   return (
     <Wrapper>
       <Box />
+      <motion.div></motion.div>
     </Wrapper>
   );
 }
