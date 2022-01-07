@@ -1,7 +1,7 @@
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { motion, useMotionValue } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 const Wrapper = styled.div`
@@ -39,17 +39,21 @@ const boxVariants = {
 
 function App() {
   const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const opacity = useMotionValue(1);
+  const customOpacity = useTransform(x, [-800, 0, 800], [1, 0.5, 0.01]);
+  const customScale = useTransform(x, [-800, 0, 800], [2, 1, 0.1]);
 
   useEffect(() => {
-    x.onChange(() => console.log(x.get()));
+    // x.onChange(() => console.log(x.get()));
+    customScale.onChange(() => console.log(customScale.get()));
   }, [x]);
 
   return (
     <Wrapper>
-      <button onClick={() => x.set(200)}>Click</button>
-      <Box style={{ x }} drag="x" dragSnapToOrigin />
+      <Box
+        style={{ x, scale: customScale, opacity: customOpacity }}
+        drag="x"
+        dragSnapToOrigin
+      />
     </Wrapper>
   );
 }
